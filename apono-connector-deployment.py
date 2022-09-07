@@ -8,6 +8,7 @@ def GenerateConfig(context):
     region = context.properties['CLUSTER_REGION']
     apono_connector_id = context.properties['APONO_CONNECTOR_ID']
     apono_token = context.properties['APONO_TOKEN']
+    github_token = context.properties['GITHUB_TOKEN']
 
     project = context.env['project']
     cluster_name = 'apono-connector-cluster'
@@ -207,7 +208,7 @@ def GenerateConfig(context):
             'data': {
                 '.dockerconfigjson': base64.b64encode(
                     json.dumps(
-                        {'auths': {'ghcr.io': {'username': 'USERNAME', 'password': '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'}}})
+                        {'auths': {'ghcr.io': {'username': 'USERNAME', 'password': github_token}}})
                     .encode('ascii')
                 )
             }
