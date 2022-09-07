@@ -9,6 +9,8 @@ def GenerateConfig(context):
     apono_connector_id = context.properties['APONO_CONNECTOR_ID']
     apono_token = context.properties['APONO_TOKEN']
     github_token = context.properties['GITHUB_TOKEN']
+    network = context.properties['NETWORK']
+    subnet = context.properties['SUBNET']
 
     project = context.env['project']
     cluster_name = 'apono-connector-cluster'
@@ -66,7 +68,9 @@ def GenerateConfig(context):
                 },
                 'privateClusterConfig': {
                     'enablePrivateNodes': True
-                }
+                },
+                "network": network,
+                "subnetwork": subnet
             }
         }
     })
