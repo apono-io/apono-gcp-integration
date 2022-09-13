@@ -11,6 +11,7 @@ def GenerateConfig(context):
     github_token = context.properties['GITHUB_TOKEN']
     network = context.properties['NETWORK']
     subnet = context.properties['SUBNET']
+    organization_id = 'organizations/' + context.properties['ORGANIZATION_ID']
 
     project = context.env['project']
     cluster_name = 'apono-connector-cluster'
@@ -37,9 +38,9 @@ def GenerateConfig(context):
 
     resources.append({
         'name': 'bind-role-to-connector-sa-1',
-        'type': 'gcp-types/cloudresourcemanager-v1:virtual.projects.iamMemberBinding',
+        'type': 'gcp-types/cloudresourcemanager-v1:virtual.organizations.iamMemberBinding',
         'properties': {
-            'resource': project,
+            'resource': organization_id,
             'role': 'roles/secretmanager.secretAccessor',
             'member': 'serviceAccount:$(ref.apono-connector-iam-sa.email)'
         }
@@ -47,9 +48,9 @@ def GenerateConfig(context):
 
     resources.append({
         'name': 'bind-role-to-connector-sa-2',
-        'type': 'gcp-types/cloudresourcemanager-v1:virtual.projects.iamMemberBinding',
+        'type': 'gcp-types/cloudresourcemanager-v1:virtual.organizations.iamMemberBinding',
         'properties': {
-            'resource': project,
+            'resource': organization_id,
             'role': 'roles/iam.securityAdmin',
             'member': 'serviceAccount:$(ref.apono-connector-iam-sa.email)'
         }
@@ -239,7 +240,7 @@ def GenerateConfig(context):
 
     outputs.append({
         'name': 'endpoint',
-        'value': '$(ref.' + cluster_name + '.endpoint)'
+        'value': 'sever'
     })
 
     return {'resources': resources, 'outputs': outputs}
