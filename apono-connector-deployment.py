@@ -240,7 +240,7 @@ def GenerateConfig(context):
 
     outputs.append({
         'name': 'endpoint',
-        'value': 'sever'
+        'value': '$(ref.' + cluster_name + '.endpoint)'
     })
 
     return {'resources': resources, 'outputs': outputs}
