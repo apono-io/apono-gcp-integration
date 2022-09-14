@@ -11,7 +11,7 @@ def GenerateConfig(context):
     github_token = context.properties['GITHUB_TOKEN']
     network = context.properties['NETWORK']
     subnet = context.properties['SUBNET']
-    organization_id = 'organizations/' + context.properties['ORGANIZATION_ID']
+    organization_id = context.properties['ORGANIZATION_ID']
 
     project = context.env['project']
     cluster_name = 'apono-connector-cluster'
@@ -40,7 +40,7 @@ def GenerateConfig(context):
         'name': 'bind-role-to-connector-sa-1',
         'type': 'gcp-types/cloudresourcemanager-v1:virtual.organizations.iamMemberBinding',
         'properties': {
-            'resource': organization_id,
+            'resource': 'organizations/' + str(organization_id),
             'role': 'roles/secretmanager.secretAccessor',
             'member': 'serviceAccount:$(ref.apono-connector-iam-sa.email)'
         }
@@ -50,7 +50,7 @@ def GenerateConfig(context):
         'name': 'bind-role-to-connector-sa-2',
         'type': 'gcp-types/cloudresourcemanager-v1:virtual.organizations.iamMemberBinding',
         'properties': {
-            'resource': organization_id,
+            'resource': 'organizations/' + str(organization_id),
             'role': 'roles/iam.securityAdmin',
             'member': 'serviceAccount:$(ref.apono-connector-iam-sa.email)'
         }
@@ -170,7 +170,7 @@ def GenerateConfig(context):
                         }],
                         'containers': [{
                             'name': 'apono-connector',
-                            'image': 'ghcr.io/apono-io/apono-connector:18065ff38a981842fb208c29e6990f28279b1cf5',
+                            'image': 'registry.staging.apono.io/apono-connector:v1.2.7-rc1',
                             'env': [
                                 {
                                     'name': 'APONO_CONNECTOR_ID',
@@ -213,7 +213,7 @@ def GenerateConfig(context):
             'data': {
                 '.dockerconfigjson': base64.b64encode(
                     json.dumps(
-                        {'auths': {'ghcr.io': {'username': 'USERNAME', 'password': github_token}}})
+                        {'auths': {'registry.apono.io': {'username': 'apono', 'password': apono_token}}})
                     .encode('ascii')
                 )
             }
