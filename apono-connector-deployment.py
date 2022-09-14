@@ -8,7 +8,6 @@ def GenerateConfig(context):
     region = context.properties['CLUSTER_REGION']
     apono_connector_id = context.properties['APONO_CONNECTOR_ID']
     apono_token = context.properties['APONO_TOKEN']
-    github_token = context.properties['GITHUB_TOKEN']
     network = context.properties['NETWORK']
     subnet = context.properties['SUBNET']
     organization_id = context.properties['ORGANIZATION_ID']
