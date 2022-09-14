@@ -3,8 +3,6 @@ import base64
 
 
 def GenerateConfig(context):
-    """Generate YAML resource configuration."""
-
     region = context.properties['CLUSTER_REGION']
     apono_connector_id = context.properties['APONO_CONNECTOR_ID']
     apono_token = context.properties['APONO_TOKEN']
@@ -169,7 +167,7 @@ def GenerateConfig(context):
                         }],
                         'containers': [{
                             'name': 'apono-connector',
-                            'image': 'registry.staging.apono.io/apono-connector:v1.2.7-rc1',
+                            'image': 'registry.apono.io/apono-connector:v1.2.8',
                             'env': [
                                 {
                                     'name': 'APONO_CONNECTOR_ID',
